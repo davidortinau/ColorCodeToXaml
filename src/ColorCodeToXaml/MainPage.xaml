@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:app="clr-namespace:ColorCodeToXaml"
+             xmlns:cc="clr-namespace:ColorCode;assembly=ColorCode.Core"
+             x:DataType="app:MainViewModel"
+             x:Class="ColorCodeToXaml.MainPage"
+             Shell.NavBarIsVisible="False"
+             >
+
+    <ContentPage.BindingContext>
+        <app:MainViewModel/>
+    </ContentPage.BindingContext>
+
+    <Grid ColumnDefinitions="*,*" RowDefinitions="*,400">
+        <ScrollView Grid.Column="0">
+            <VerticalStackLayout
+                Spacing="25"
+                Padding="30"
+                VerticalOptions="Start">
+
+                <HorizontalStackLayout
+                    RadioButtonGroup.GroupName="Language"
+                    RadioButtonGroup.SelectedValue="{Binding Language}"
+                    Spacing="20"
+                    >
+                    <Label Text="Code" FontSize="18" FontAttributes="Bold" VerticalOptions="Center"/>
+                    <RadioButton Content="C#" Value="{x:Static cc:Languages.CSharp}" VerticalOptions="Center"/>
+                    <RadioButton Content="XAML" Value="{x:Static cc:Languages.Xml}" VerticalOptions="Center"/>
+                </HorizontalStackLayout>
+
+                
+                <Border Stroke="Black" StrokeThickness="1"
+                        StrokeShape="{RoundRectangle CornerRadius=4}"
+                        Padding="8">
+                    <Editor Text="{Binding Code}"
+                            AutoSize="TextChanges"
+                            MinimumHeightRequest="300"
+                            />
+                </Border>
+
+                
+
+                
+
+                
+            
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <BoxView Color="Black" WidthRequest="1"
+                 HorizontalOptions="End"/>
+
+        <ScrollView Grid.Column="1">
+            <VerticalStackLayout
+                Spacing="25"
+                Padding="30"
+                VerticalOptions="Start">
+                <Label Text="Output Preview" FontSize="18" FontAttributes="Bold" Margin="0,18,0,0"/>
+                <!--<Border Stroke="Black" StrokeThickness="1"
+                        StrokeShape="{RoundRectangle CornerRadius=4}"
+                        Padding="8">
+                    <Label FormattedText="{Binding OutputFormattedString}" />
+                </Border>-->
+                <Label FormattedText="{Binding OutputFormattedString}" FontSize="16" />
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <HorizontalStackLayout VerticalOptions="Start" HorizontalOptions="End"
+                               Margin="30"
+                               Spacing="15"
+                               Grid.Column="1"
+                               >
+            <Button Text="Copy to Clipboard" Command="{Binding CopyCommand}" HorizontalOptions="Start"
+                    Background="DarkGray"
+                    />
+
+            <Button
+                Text="Convert"
+                SemanticProperties.Hint="Converts Code to XAML"
+                Command="{Binding ConvertCommand}"
+                HorizontalOptions="Start" />
+        </HorizontalStackLayout>
+
+        <ScrollView Grid.Row="1" Grid.ColumnSpan="2">
+            <VerticalStackLayout
+                Spacing="25"
+                Padding="30">
+                <Label Text="XAML FormattedString" FontSize="18" FontAttributes="Bold"/>
+            
+                    <Label Text="{Binding Output, Mode=OneWay}" LineBreakMode="CharacterWrap"/>
+            
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>
+
